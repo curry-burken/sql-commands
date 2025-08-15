@@ -1,0 +1,62 @@
+CREATE DATABASE IndianSSN_DB;
+USE IndianSSN_DB;
+
+-- Table Creation
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Password VARCHAR(50) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Sex CHAR(5) CHECK (Sex IN ('M','F','Other')) NOT NULL,
+    DOB DATE NOT NULL,
+    Address VARCHAR(400) NOT NULL,
+    PhoneNumber VARCHAR(15) NOT NULL,
+    EmailID VARCHAR(100) NOT NULL,
+    State VARCHAR(50) NOT NULL,
+    City VARCHAR(50) NOT NULL,
+    ImagePath VARCHAR(400) NOT NULL,
+    ISSNumber VARCHAR(20) UNIQUE NOT NULL,
+    IsBlocked BIT DEFAULT 'false'
+);
+
+CREATE TABLE Admins (
+    AdminID INT IDENTITY(1,1) PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Password VARCHAR(50) NOT NULL
+);
+
+--Table Drop
+DROP TABLE Users;
+DROP TABLE Admins;
+
+--Clear Table
+DELETE FROM Users;
+DELETE FROM Admins;
+
+--Table Display
+SELECT * FROM Users;
+SELECT * FROM Admins;
+
+--Sample Data
+INSERT INTO Users
+VALUES
+('rahulsharma', 'pass@123', 'Rahul', 'Sharma', 'M', '1990-05-12', '123, MG Road, Pune', '9876543210', 'rahul.sharma@example.com', 'Maharashtra', 'Pune', '/images/rahul.jpg', 'ISSN0001', 0),
+('anitasingh', 'pass@456', 'Anita', 'Singh', 'F', '1992-08-22', '45, Lodhi Colony, New Delhi', '9123456780', 'anita.singh@example.com', 'Delhi', 'New Delhi', '/images/anita.jpg', 'ISSN0002', 0),
+('vishal.verma', 'pass@789', 'Vishal', 'Verma', 'M', '1988-03-15', '78, Park Street, Kolkata', '9988776655', 'vishal.verma@example.com', 'West Bengal', 'Kolkata', '/images/vishal.jpg', 'ISSN0003', 0),
+('priyagupta', 'secure@123', 'Priya', 'Gupta', 'F', '1995-11-10', '12/5 Charbagh, Lucknow', '9786543210', 'priya.gupta@example.com', 'Uttar Pradesh', 'Lucknow', '/images/priya.jpg', 'ISSN0004', 0),
+('arunkumar', 'arun@pass', 'Arun', 'Kumar', 'M', '1991-07-28', '23 Anna Nagar, Chennai', '9090909090', 'arun.kumar@example.com', 'Tamil Nadu', 'Chennai', '/images/arun.jpg', 'ISSN0005', 0),
+('meenasen', 'meena@567', 'Meena', 'Sen', 'F', '1993-12-05', 'B-45, Salt Lake, Kolkata', '9123987654', 'meena.sen@example.com', 'West Bengal', 'Kolkata', '/images/meena.jpg', 'ISSN0006', 0),
+('amitpatel', 'amit@321', 'Amit', 'Patel', 'M', '1989-04-18', '45, Ashram Road, Ahmedabad', '9988223344', 'amit.patel@example.com', 'Gujarat', 'Ahmedabad', '/images/amit.jpg', 'ISSN0007', 0),
+('sonalraj', 'sonal@999', 'Sonal', 'Raj', 'F', '1996-09-25', 'H.No. 23, Banjara Hills, Hyderabad', '9001234567', 'sonal.raj@example.com', 'Telangana', 'Hyderabad', '/images/sonal.jpg', 'ISSN0008', 0),
+('sameerjoshi', 'sam@456', 'Sameer', 'Joshi', 'M', '1994-02-14', '78, Shivaji Nagar, Mumbai', '9123377889', 'sameer.joshi@example.com', 'Maharashtra', 'Mumbai', '/images/sameer.jpg', 'ISSN0009', 0),
+('nehaagarwal', 'neha@pass', 'Neha', 'Agarwal', 'F', '1998-06-30', '67, Civil Lines, Jaipur', '9345678901', 'neha.agarwal@example.com', 'Rajasthan', 'Jaipur', '/images/neha.jpg', 'ISSN0010', 0);
+
+INSERT INTO Admins
+VALUES
+('admin_rahul', 'Admin@123'),
+('superuser_sneha', 'Sneha@456'),
+('sysadmin_amit', 'Amit@789'),
+('dataadmin_priya', 'Priya@321'),
+('root_vikas', 'Vikas@999');
+
