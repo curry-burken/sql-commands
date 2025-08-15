@@ -11,7 +11,7 @@ CREATE TABLE Users (
     Sex CHAR(5) CHECK (Sex IN ('M','F','Other')) NOT NULL,
     DOB DATE NOT NULL,
     Address VARCHAR(400) NOT NULL,
-    PhoneNumber VARCHAR(15) NOT NULL,
+    PhoneNumber VARCHAR(10) NOT NULL,
     EmailID VARCHAR(100) NOT NULL,
     State VARCHAR(50) NOT NULL,
     City VARCHAR(50) NOT NULL,
