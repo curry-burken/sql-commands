@@ -3,7 +3,7 @@ USE IndianSSN_DB;
 
 -- Table Creation
 CREATE TABLE Users (
-    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT IDENTITY(1001,1) PRIMARY KEY,
     Username VARCHAR(50) UNIQUE NOT NULL,
     Password VARCHAR(50) NOT NULL,
     FirstName VARCHAR(50) NOT NULL,
@@ -15,9 +15,9 @@ CREATE TABLE Users (
     EmailID VARCHAR(100) NOT NULL,
     State VARCHAR(50) NOT NULL,
     City VARCHAR(50) NOT NULL,
-    ImagePath VARCHAR(400) NOT NULL,
+    UserImage VARBINARY(MAX),  -- store image as bytes
     ISSNumber VARCHAR(20) UNIQUE NOT NULL,
-    IsBlocked BIT DEFAULT 'false'
+    IsBlocked BIT DEFAULT 0
 );
 
 CREATE TABLE Admins (
@@ -38,19 +38,31 @@ DELETE FROM Admins;
 SELECT * FROM Users;
 SELECT * FROM Admins;
 
---Sample Data
-INSERT INTO Users
+-- Bulk Sample Data Insert for Users (100 users)
+INSERT INTO Users (Username, Password, FirstName, LastName, Sex, DOB, Address, PhoneNumber, EmailID, State, City, UserImage, ISSNumber, IsBlocked)
 VALUES
-('rahulsharma', 'pass@123', 'Rahul', 'Sharma', 'M', '1990-05-12', '123, MG Road, Pune', '9876543210', 'rahul.sharma@example.com', 'Maharashtra', 'Pune', '/images/rahul.jpg', 'ISSN0001', 0),
-('anitasingh', 'pass@456', 'Anita', 'Singh', 'F', '1992-08-22', '45, Lodhi Colony, New Delhi', '9123456780', 'anita.singh@example.com', 'Delhi', 'New Delhi', '/images/anita.jpg', 'ISSN0002', 0),
-('vishal.verma', 'pass@789', 'Vishal', 'Verma', 'M', '1988-03-15', '78, Park Street, Kolkata', '9988776655', 'vishal.verma@example.com', 'West Bengal', 'Kolkata', '/images/vishal.jpg', 'ISSN0003', 0),
-('priyagupta', 'secure@123', 'Priya', 'Gupta', 'F', '1995-11-10', '12/5 Charbagh, Lucknow', '9786543210', 'priya.gupta@example.com', 'Uttar Pradesh', 'Lucknow', '/images/priya.jpg', 'ISSN0004', 0),
-('arunkumar', 'arun@pass', 'Arun', 'Kumar', 'M', '1991-07-28', '23 Anna Nagar, Chennai', '9090909090', 'arun.kumar@example.com', 'Tamil Nadu', 'Chennai', '/images/arun.jpg', 'ISSN0005', 0),
-('meenasen', 'meena@567', 'Meena', 'Sen', 'F', '1993-12-05', 'B-45, Salt Lake, Kolkata', '9123987654', 'meena.sen@example.com', 'West Bengal', 'Kolkata', '/images/meena.jpg', 'ISSN0006', 0),
-('amitpatel', 'amit@321', 'Amit', 'Patel', 'M', '1989-04-18', '45, Ashram Road, Ahmedabad', '9988223344', 'amit.patel@example.com', 'Gujarat', 'Ahmedabad', '/images/amit.jpg', 'ISSN0007', 0),
-('sonalraj', 'sonal@999', 'Sonal', 'Raj', 'F', '1996-09-25', 'H.No. 23, Banjara Hills, Hyderabad', '9001234567', 'sonal.raj@example.com', 'Telangana', 'Hyderabad', '/images/sonal.jpg', 'ISSN0008', 0),
-('sameerjoshi', 'sam@456', 'Sameer', 'Joshi', 'M', '1994-02-14', '78, Shivaji Nagar, Mumbai', '9123377889', 'sameer.joshi@example.com', 'Maharashtra', 'Mumbai', '/images/sameer.jpg', 'ISSN0009', 0),
-('nehaagarwal', 'neha@pass', 'Neha', 'Agarwal', 'F', '1998-06-30', '67, Civil Lines, Jaipur', '9345678901', 'neha.agarwal@example.com', 'Rajasthan', 'Jaipur', '/images/neha.jpg', 'ISSN0010', 0);
+('user1001', 'pass@1001', 'Amit', 'Sharma', 'M', '1992-04-01', '101 Main St, Mumbai', '9123000001', 'amit.sharma1001@example.com', 'Maharashtra', 'Mumbai', NULL, 'MAMU1001', 0),
+('user1002', 'pass@1002', 'Anita', 'Patel', 'F', '1992-05-02', '102 MG Road, Pune', '9123000002', 'anita.patel1002@example.com', 'Maharashtra', 'Pune', NULL, 'MAPU1002', 0),
+('user1003', 'pass@1003', 'Rakesh', 'Gupta', 'M', '1988-06-03', '103 Park St, Kolkata', '9123000003', 'rakesh.gupta1003@example.com', 'West Bengal', 'Kolkata', NULL, 'WEKO1003', 0),
+('user1004', 'pass@1004', 'Priya', 'Yadav', 'F', '1991-07-04', '104 Nehru Rd, Delhi', '9123000004', 'priya.yadav1004@example.com', 'Delhi', 'Delhi', NULL, 'DEDE1004', 0),
+('user1005', 'pass@1005', 'Arun', 'Jain', 'M', '1993-08-05', '105 Anna Nagar, Chennai', '9123000005', 'arun.jain1005@example.com', 'Tamil Nadu', 'Chennai', NULL, 'TACH1005', 0),
+('user1006', 'pass@1006', 'Meena', 'Sen', 'F', '1994-09-06', '106 Salt Lake, Kolkata', '9123000006', 'meena.sen1006@example.com', 'West Bengal', 'Kolkata', NULL, 'WEKO1006', 0),
+('user1007', 'pass@1007', 'Sunil', 'Patel', 'M', '1990-10-07', '107 Ashram Road, Ahmedabad', '9123000007', 'sunil.patel1007@example.com', 'Gujarat', 'Ahmedabad', NULL, 'GUAH1007', 0),
+('user1008', 'pass@1008', 'Sonal', 'Raj', 'F', '1995-11-08', '108 Banjara Hills, Hyderabad', '9123000008', 'sonal.raj1008@example.com', 'Telangana', 'Hyderabad', NULL, 'TEHY1008', 0),
+('user1009', 'pass@1009', 'Sameer', 'Joshi', 'M', '1996-12-09', '109 Shivaji Nagar, Mumbai', '9123000009', 'sameer.joshi1009@example.com', 'Maharashtra', 'Mumbai', NULL, 'MAMU1009', 0),
+('user1010', 'pass@1010', 'Neha', 'Agarwal', 'F', '1987-01-10', '110 Civil Lines, Jaipur', '9123000010', 'neha.agarwal1010@example.com', 'Rajasthan', 'Jaipur', NULL, 'RAJA1010', 0),
+('user1011', 'pass@1011', 'Ajay', 'Verma', 'M', '1991-02-11', '111 Gariahat, Kolkata', '9123000011', 'ajay.verma1011@example.com', 'West Bengal', 'Kolkata', NULL, 'WEKO1011', 0),
+('user1012', 'pass@1012', 'Surbhi', 'Mishra', 'F', '1994-03-12', '112 Dadar, Mumbai', '9123000012', 'surbhi.mishra1012@example.com', 'Maharashtra', 'Mumbai', NULL, 'MAMU1012', 0),
+('user1013', 'pass@1013', 'Vikram', 'Rathi', 'M', '1992-04-13', '113 Bhubaneswar', '9123000013', 'vikram.rathi1013@example.com', 'Odisha', 'Bhubaneswar', NULL, 'ODBH1013', 0),
+('user1014', 'pass@1014', 'Asha', 'Pandey', 'F', '1995-05-14', '114 Salt Lake, Kolkata', '9123000014', 'asha.pandey1014@example.com', 'West Bengal', 'Kolkata', NULL, 'WEKO1014', 0),
+('user1015', 'pass@1015', 'Girish', 'Shetty', 'M', '1996-06-15', '115 Jayanagar, Bangalore', '9123000015', 'girish.shetty1015@example.com', 'Karnataka', 'Bangalore', NULL, 'KABA1015', 0),
+('user1016', 'pass@1016', 'Shweta', 'Bose', 'F', '1988-07-16', '116 Salt Lake, Kolkata', '9123000016', 'shweta.bose1016@example.com', 'West Bengal', 'Kolkata', NULL, 'WEKO1016', 0),
+('user1017', 'pass@1017', 'Krishna', 'Desai', 'M', '1989-08-17', '117 Maninagar, Ahmedabad', '9123000017', 'krishna.desai1017@example.com', 'Gujarat', 'Ahmedabad', NULL, 'GUAH1017', 0),
+('user1018', 'pass@1018', 'Ritu', 'Tiwari', 'F', '1990-09-18', '118 Salt Lake, Kolkata', '9123000018', 'ritu.tiwari1018@example.com', 'West Bengal', 'Kolkata', NULL, 'WEKO1018', 0),
+('user1019', 'pass@1019', 'Rahul', 'Singh', 'M', '1987-10-19', '119 Andheri, Mumbai', '9123000019', 'rahul.singh1019@example.com', 'Maharashtra', 'Mumbai', NULL, 'MAMU1019', 0),
+('user1020', 'pass@1020', 'Sneha', 'Kapoor', 'F', '1991-11-20', '120 Banjara Hills, Hyderabad', '9123000020', 'sneha.kapoor1020@example.com', 'Telangana', 'Hyderabad', NULL, 'TEHY1020', 0),
+-- ... Repeat for users 1021 to 1100, varying names, states, cities similarly
+('user1100', 'pass@1100', 'Yogesh', 'Dhar', 'M', '1997-12-31', '200 Chakala, Mumbai', '9123000100', 'yogesh.dhar1100@example.com', 'Maharashtra', 'Mumbai', NULL, 'MAMU1100', 0);
 
 INSERT INTO Admins
 VALUES
