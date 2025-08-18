@@ -1,0 +1,25 @@
+CREATE PROCEDURE UserLogin_sp
+    @Username NVARCHAR(50),
+    @Password NVARCHAR(50)
+AS
+BEGIN
+    SELECT Username, Password, IsBlocked
+    FROM Users
+    WHERE Username = @Username COLLATE SQL_Latin1_General_CP1_CS_AS
+      AND Password = @Password COLLATE SQL_Latin1_General_CP1_CS_AS
+END
+
+
+CREATE PROCEDURE AdminSearchUser_sp
+    @FirstName NVARCHAR(50) = NULL,
+    @City NVARCHAR(50) = NULL,
+    @State NVARCHAR(50) = NULL
+AS
+BEGIN
+    SELECT FirstName, DOB, PhoneNumber, EmailID, State, City, ISSNumber, IsBlocked
+    FROM Users
+    WHERE
+        (@FirstName IS NULL OR FirstName LIKE @FirstName)
+        AND (@City IS NULL OR City LIKE @City)
+        AND (@State IS NULL OR State LIKE @State)
+END
